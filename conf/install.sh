@@ -1,31 +1,14 @@
 #!/bin/bash
 
-#judgement
-if [[ -a /etc/supervisor/conf.d/supervisord.conf ]]; then
+# If we already performed the install, then no need to continue
+if [[ -a "/opt/.install.lock" ]]; then
   exit 0
 fi
+touch "/opt/.install.lock"
 
-#supervisor
-cat > /etc/supervisor/conf.d/supervisord.conf <<EOF
-[supervisord]
-nodaemon=true
+touch "/etc/mailname"
 
-[program:postfix]
-command=/opt/postfix.sh
-
-[program:rsyslog]
-command=/usr/sbin/rsyslogd -n -c3
-EOF
-
-############
-#  postfix
-############
-cat >> /opt/postfix.sh <<EOF
-#!/bin/bash
-service postfix start
-tail -f /var/log/mail.log
-EOF
-chmod +x /opt/postfix.sh
+chmod +x "/opt/postfix.sh"
 postconf -e myhostname=$maildomain
 postconf -F '*/*/chroot = n'
 
@@ -38,12 +21,16 @@ postconf -F '*/*/chroot = n'
 postconf -e smtpd_sasl_auth_enable=yes
 postconf -e broken_sasl_auth_clients=yes
 postconf -e smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination
+# Docker uses only ipv4 by default
+postconf -e inet_protocols=ipv4
+
 # smtpd.conf
-cat >> /etc/postfix/sasl/smtpd.conf <<EOF
+cat >> "/etc/postfix/sasl/smtpd.conf" <<EOF
 pwcheck_method: auxprop
 auxprop_plugin: sasldb
 mech_list: PLAIN LOGIN CRAM-MD5 DIGEST-MD5 NTLM
 EOF
+
 # sasldb2
 echo $smtp_user | tr , \\n > /tmp/passwd
 while IFS=':' read -r _user _pwd; do
@@ -75,7 +62,7 @@ fi
 if [[ -z "$(find /etc/opendkim/domainkeys -iname *.private)" ]]; then
   exit 0
 fi
-cat >> /etc/supervisor/conf.d/supervisord.conf <<EOF
+cat >> "/etc/supervisor/conf.d/supervisord.conf" <<EOF
 
 [program:opendkim]
 command=/usr/sbin/opendkim -f
