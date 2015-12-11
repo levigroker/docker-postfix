@@ -43,7 +43,7 @@ docker-postfix
 #### Disclaimer and Licence
 
 * Forked from [https://github.com/catatnight/docker-postfix](https://github.com/catatnight/docker-postfix)
-* This work is licensed the MIT license.
+* This work is licensed with the MIT license.
   Please see the included LICENSE.txt for complete details.
 
 #### About
