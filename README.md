@@ -1,8 +1,8 @@
 docker-postfix
 ==============
 
-Run [Postfix](http://www.postfix.org) with SMTP authentication (sasldb) in a docker container.
-TLS and OpenDKIM support are optional.
+[Postfix](http://www.postfix.org) server with SMTP authentication (sasldb) and optional
+TLS and OpenDKIM support.
 
 ### Requirement
 + [Docker](https://www.docker.com) 1.0
@@ -41,13 +41,13 @@ TLS and OpenDKIM support are optional.
 	```
 
 #### Note
-+ Login credentials should be set to (`username@mail.example.com`, `password`) in SMTP client
-+ You can assign the port of MTA on the host machine to one other than 25 ([postfix how-to](http://www.postfix.org/MULTI_INSTANCE_README.html))
-+ Read the reference below to find out how to generate domain keys and add public key to the domain's DNS records
+* Login credentials should be set to (`username@mail.example.com`, `password`) in SMTP client
+* You can assign the port of MTA on the host machine to one other than 25 ([postfix how-to](http://www.postfix.org/MULTI_INSTANCE_README.html))
+* Read the reference below to find out how to generate domain keys and add public key to the domain's DNS records
 
 #### Reference
-+ [Postfix SASL How To](http://www.postfix.org/SASL_README.html)
-+ [How To Install and Configure DKIM with Postfix on Debian Wheezy](https://www.digitalocean.com/community/articles/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy)
+* [Postfix SASL How To](http://www.postfix.org/SASL_README.html)
+* [How To Install and Configure DKIM with Postfix on Debian Wheezy](https://www.digitalocean.com/community/articles/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy)
 
 #### Disclaimer and Licence
 
