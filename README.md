@@ -1,44 +1,35 @@
 docker-postfix
 ==============
+### [Postfix](http://www.postfix.org) server with SMTP authentication (sasldb) and optional TLS and OpenDKIM support.
 
-[Postfix](http://www.postfix.org) server with SMTP authentication (sasldb) and optional
-TLS and OpenDKIM support.
-
-### Requirement
-+ [Docker](https://www.docker.com) 1.0
+### Requirements
++ [Docker](https://www.docker.com)
 
 ### Installation
 1. Build image
 
-	```bash
-	$ sudo docker pull levigroker/postfix
-	```
+		$ sudo docker pull levigroker/postfix
 
 ### Usage
 1. Create postfix container with smtp authentication
 
-	```bash
-	$ docker run -p 25:25 \
-			-e maildomain=mail.example.com -e smtp_user=user:pwd \
-			--name postfix -d levigroker/postfix
-	# Set multiple user credentials: -e smtp_user=user1:pwd1,user2:pwd2,...,userN:pwdN
-	```
+		$ docker run -p 25:25 \
+				-e maildomain=mail.example.com -e smtp_user=user:pwd \
+				--name postfix -d levigroker/postfix
+		# Set multiple user credentials: -e smtp_user=user1:pwd1,user2:pwd2,...,userN:pwdN
+
 2. Enable OpenDKIM: save your domain key ```.private``` in ```/path/to/domainkeys```
 
-	```bash
-	$ docker run -p 25:25 \
-			-e maildomain=mail.example.com -e smtp_user=user:pwd \
-			-v /path/to/domainkeys:/etc/opendkim/domainkeys \
-			--name postfix -d levigroker/postfix
-	```
+		$ docker run -p 25:25 \
+				-e maildomain=mail.example.com -e smtp_user=user:pwd \
+				-v /path/to/domainkeys:/etc/opendkim/domainkeys \
+				--name postfix -d levigroker/postfix
 3. Enable TLS(587): save your SSL certificates ```.key``` and ```.crt``` to  ```/path/to/certs```
 
-	```bash
-	$ docker run -p 587:587 \
-			-e maildomain=mail.example.com -e smtp_user=user:pwd \
-			-v /path/to/certs:/etc/postfix/certs \
-			--name postfix -d levigroker/postfix
-	```
+		$ docker run -p 587:587 \
+				-e maildomain=mail.example.com -e smtp_user=user:pwd \
+				-v /path/to/certs:/etc/postfix/certs \
+				--name postfix -d levigroker/postfix
 
 #### Note
 * Login credentials should be set to (`username@mail.example.com`, `password`) in SMTP client
@@ -51,7 +42,7 @@ TLS and OpenDKIM support.
 
 #### Disclaimer and Licence
 
-* Forked from (https://github.com/catatnight/docker-postfix)[https://github.com/catatnight/docker-postfix]
+* Forked from [https://github.com/catatnight/docker-postfix](https://github.com/catatnight/docker-postfix)
 * This work is licensed the MIT license.
   Please see the included LICENSE.txt for complete details.
 
