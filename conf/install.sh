@@ -22,6 +22,7 @@ postconf -e smtpd_sasl_auth_enable=yes
 postconf -e broken_sasl_auth_clients=yes
 postconf -e smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination
 # Docker uses only ipv4 by default
+# See https://www.solver.io/wp/2012/10/15/postfix-gmail-network-is-unreachable/
 postconf -e inet_protocols=ipv4
 
 # smtpd.conf
